@@ -24,7 +24,8 @@ namespace UserAuth.Services
         public async Task<IActionResult> CreateUser(CreateUserDto userDto)
         {
             User user = _mapper.Map<User>(userDto);
-            IdentityResult result = await _userManager.CreateAsync(user, userDto.Password);
+            IdentityResult result = await 
+                _userManager.CreateAsync(user, userDto.Password);
 
             if (result.Succeeded)
             { 
