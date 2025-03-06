@@ -14,10 +14,17 @@ namespace UserAuth.Controllers
         {
             _services = services;
         }
-        [HttpPost]
+        [HttpPost("cadastro")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto userDto)
         {
             return await _services.CreateUser(userDto);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto userDto)
+        {
+            await _services.Login(userDto);
+            return Ok("Usuário autenticado!");
         }
 
     }
