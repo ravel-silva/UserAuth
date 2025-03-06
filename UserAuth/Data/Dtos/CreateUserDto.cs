@@ -2,7 +2,7 @@
 
 namespace UserAuth.Data.Dtos
 {
-    public class CreateUsuarioDto
+    public class CreateUserDto
     {
         [Required]
         public string UserName { get; set; } // Nome do usuario
