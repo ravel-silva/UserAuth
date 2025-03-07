@@ -10,17 +10,17 @@ namespace UserAuth.Services
 {
     public class UserServices
     {
-        private AppDbContext _context; // Contexto do banco de dados
         private IMapper _mapper;
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
+        private TokenService _tokenService;
 
-        public UserServices(AppDbContext context, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserServices(IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager, TokenService tokenService)
         {
-            _context = context;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _tokenService = tokenService;
         }
         //criar um novo usuario
         public async Task<IActionResult> CreateUser(CreateUserDto userDto)
@@ -38,7 +38,7 @@ namespace UserAuth.Services
         }
 
         //faz o login do usuario
-        public async Task Login(LoginUserDto userDto)
+        public async Task<string> Login(LoginUserDto userDto)
         {
             var result = await _signInManager.PasswordSignInAsync(userDto.Username, userDto.Password, false, false);
             
@@ -47,6 +47,13 @@ namespace UserAuth.Services
                 throw new ApplicationException("Usuário ou senha inválidos");
             }
 
+            var user = _signInManager
+               .UserManager
+               .Users
+               .FirstOrDefault(user => user.NormalizedUserName == userDto.Username.ToUpper());
+
+            var token = _tokenService.GenerateToken(user);
+            return token;
         }
     }
 }

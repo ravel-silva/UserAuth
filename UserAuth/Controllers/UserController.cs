@@ -23,8 +23,8 @@ namespace UserAuth.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDto)
         {
-            await _services.Login(userDto);
-            return Ok("Usuário autenticado!");
+            var result = await _services.Login(userDto);
+            return Ok(result);
         }
 
     }
