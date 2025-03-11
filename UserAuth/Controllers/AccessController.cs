@@ -8,7 +8,7 @@ namespace UserAuth.Controllers
     public class AccessController : ControllerBase
     {
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "Idade")]
         public IActionResult Get()
         {
             return Ok("Acesso Permitido");

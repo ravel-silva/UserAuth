@@ -15,6 +15,7 @@ namespace UserAuth.Services
             {
                    new Claim("userName", user.UserName),
                    new Claim("registrationNumber", user.RegistrationNumber),
+                   new Claim("dateOfBirth", user.DateOfBirth.ToString()),
             };
 
             var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ljkbbHJKL345632RSDFDFBFGDDfsdfdjy"));
